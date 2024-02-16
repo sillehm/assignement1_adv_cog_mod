@@ -91,7 +91,7 @@ wsls_vs_random <- ggplot(df_wsls_vs_random) + theme_classic() +
   geom_line(color = "skyblue3", aes(trial, cumulativerateOther))+
   ggtitle("WSLS agent vs random agent")
 
-ggsave("wsls_vs_random.png", width = 8, height = 6)
+ggsave("plots/wsls_vs_random.png", width = 8, height = 6)
 ```
 
 
@@ -161,83 +161,5 @@ ggplot(df_IM_vs_random) + theme_classic() +
   geom_line(color = "skyblue3", aes(trial, cumulativerateOther))+
   ggtitle("Imperfect memory agent vs random agent")
 
-ggsave("IM_vs_random.png", width = 8, height = 6)
+ggsave("plots/IM_vs_random.png", width = 8, height = 6)
 ```
-
-
-NOTES / TRASH
-```{r}
-  
-# Defining the subsequent 
-for (i in 2:trials) {
-  
-  # me playing around 12/2 
-  history <- Other[1:i]
-  
-  if (length(history) > Last_n_trials){
-    history <- tail(history, Last_n_trials)
-    
-    Self[i] <-  round(mean(history))
-  }
-  
-  else{
-    Self[i] <- ImperfectMemoryAgent(Other, Last_n_trials)
-  }
-}
-    
-     if (length(history) > Last_n_trials){
-    history <-  history[-Last_n_trials]
-    
-    Self[i] <-  round(mean(history))
-  }
-    
-  
-  if (i < Last_n_trials) {
-    Self[i] <- ImperfectMemoryAgent
-      
-    
-      # agent(history) - history being a list of choices
-      
-      # if len(history) > than window
-        #then override the history and only take the last window trials
-      #history = history[-window]
-      
-      # history could be the choices of the other random agent 
-      
-    
-    # Otherwise - once last_n_trials is surpassed look only at those n trials
-  else 
-    Self[i] <- WinShiftLoseStayAgent(Other, Last_n_trials)
-  
-```
-
-
-# playaround to get intuitions
-
-```{r}
-# Example data for the last 10 trials (replace this with your actual data)
-trials <- c(3, 5, 8, 2, 6, 7, 4, 1, 9, 5)
-
-# Set the value of Last_n_trials
-Last_n_trials <- 5
-
-# Calculate the mean of the last 5 trials and round the result
-choice <- round(mean(tail(trials, Last_n_trials)))
-
-# Print the result
-print(choice)
-```
-
-
-
-```{r}
-agent <- c(3, 5, 8, 2, 6, 7, 4, 1, 9, 5)
-
-history <- agent[3:10]
-
-history <- tail(history, 5)
-
-history
-```
-
-
